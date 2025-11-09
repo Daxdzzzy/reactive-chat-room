@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Room</title>
+</head>
+<body>
+    <h1>Chat Room</h1>
+    <div id="messages"></div>
+    <input id="usernameInput" type="text" placeholder="Your username...">
+    <input id="messageInput" type="text" placeholder="Type message...">
+    <button id="sendBtn">Send</button>
+    <script>
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const ws = new WebSocket(protocol + '//' + window.location.host + '/chat');
+        
+        ws.onmessage = (event) => {
+            const messages = document.getElementById('messages');
+            messages.innerHTML += '<p>' + event.data + '</p>';
+        };
+        
+        document.getElementById('sendBtn').onclick = () => {
+            const usernameInput = document.getElementById('usernameInput');
+            const messageInput = document.getElementById('messageInput');
+            const username = usernameInput.value || 'Anonymous';
+            const message = messageInput.value;
+            if (message) {
+                ws.send(username + ': ' + message);
+                messageInput.value = '';
+            }
+        };
+    </script>
+</body>
+</html>

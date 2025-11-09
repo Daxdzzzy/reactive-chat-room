@@ -1,0 +1,8 @@
+# Reset exclusions
+!gradle/
+!gradle/wrapper/gradle-wrapper.jar
+!gradlew
+!gradlew.bat
+!gradle.properties
+!settings.gradle
+!app/build.gradle
